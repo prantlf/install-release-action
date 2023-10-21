@@ -1,6 +1,6 @@
 {
   "name": "install-release-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.",
   "author": "Ferdinand Prantl <prantlf@gmail.com> (http://prantl.tk)",
   "license": "MIT",
