@@ -1,0 +1,130 @@
+name: Test or Release
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+    paths-ignore:
+      - '**/*.md'
+      - LICENSE
+  pull_request:
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install PNPM
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        run_install: |
+          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - name: Build and check
+      run: |
+        npm run build
+        npm test
+    - name: Test
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        use-cache: false
+    - name: Test cache
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install PNPM
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        run_install: |
+          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - name: Build and check
+      run: |
+        npm run build
+        npm test
+    - name: Test
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        use-cache: false
+    - name: Test cache
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install PNPM
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        run_install: |
+          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - name: Build
+      run: npm run build
+    - name: Test
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        use-cache: false
+    - name: Test cache
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+
+  release:
+    needs:
+      - linux
+      - macos
+      - windows
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: 'https://registry.npmjs.org'
+    - name: Install PNPM
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        run_install: |
+          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - name: Publish
+      uses: cycjimmy/semantic-release-action@v4
+      with:
+        branches: master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

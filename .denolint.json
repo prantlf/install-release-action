@@ -1,0 +1,10 @@
+{
+  "files": {
+    "exclude": [
+      "dist"
+    ]
+  },
+  "rules": {
+    "tags": ["recommended"]
+  }
+}

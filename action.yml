@@ -1,0 +1,47 @@
+name: 'Download Released Tool'
+description: 'GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.'
+author: prantlf
+
+branding:
+  icon: download
+  color: blue
+
+inputs:
+  repo:
+    description: >-
+      Specify the repository in the form `owner/name` to download the archive with the executable from. Mandatory.
+    required: true
+  version:
+    description: >-
+      Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version) or a semantic version number in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`).
+    default: latest
+  name:
+    description: >-
+      Specify the name prefix of the archive to download and the name of the the executable to extract from it. If not specified, the first archive named `{name}-{platform}-{architecture}.zip` will be picked and the prefix `name` will be used.
+  use-cache:
+    description: >-
+      Set to `false` to ignore the cache and always perform the full installation by downloading and unpacking a binary.
+    default: true
+  token:
+    description: >-
+      Authorization token to inspect releases and commits in the `{repo}` repository.
+      Either a GitHub personal access token or the GitHub workflow token. And if even that is not set, the GitHub workflow token from the action-execution context will be used as default.
+    default: ${{ github.token }}
+
+outputs:
+  version:
+    description: >-
+      The actually installed version of the executable, as returned by `{executable} -V`.
+  bin-path:
+    description: >-
+      The complete path to the directory with the extracted.
+  exe-path:
+    description: >-
+      The complete path to the extracted executable.
+  used-cache:
+    description: >-
+      A boolean value indicating if the installation succeeded from the cache.
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
