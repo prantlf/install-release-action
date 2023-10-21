@@ -1,4 +1,4 @@
-# Download Released Tool
+# Install Released Tool
 
 [![Latest version](https://img.shields.io/npm/v/install-release-action) ![Dependency status](https://img.shields.io/librariesio/release/npm/install-release-action)](https://www.npmjs.com/package/install-release-action)
 

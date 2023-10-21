@@ -1,4 +1,4 @@
-name: 'Download Released Tool'
+name: 'Install Released Tool'
 description: 'GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.'
 author: prantlf
 
