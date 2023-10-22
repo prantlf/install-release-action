@@ -3,8 +3,8 @@ description: 'GitHub action for downloading, extracting, caching an executable f
 author: prantlf
 
 branding:
-  icon: download
-  color: blue
+  icon: gift
+  color: purple
 
 inputs:
   repo:
