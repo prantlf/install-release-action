@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/prantlf/install-release-action/compare/v1.0.1...v1.0.2) (2023-10-22)
+
+
+### Bug Fixes
+
+* Update branding ([77a2379](https://github.com/prantlf/install-release-action/commit/77a2379dfc6e1e5fdb4e946f424eac17b49d007f))
+
 # Changes
 
 ## [1.0.1](https://github.com/prantlf/download-tool-action/compare/v1.0.0...v1.0.1) (2023-10-21)
