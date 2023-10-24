@@ -13,7 +13,7 @@ inputs:
     required: true
   version:
     description: >-
-      Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version) or a semantic version number in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`).
+      Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version) or a semantic version number in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`), or any semantic version specification.
     default: latest
   name:
     description: >-
