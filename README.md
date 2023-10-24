@@ -5,7 +5,7 @@
 GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.
 
 * Simple syntax with defaults according to the best performance and practices.
-* Convenient version specification - `latest` or `X.Y.Z`.
+* Convenient version specification - `latest` or `X.Y.Z` or semantic version specification.
 * An already unpacked version is cached to speed up the build pipeline.
 * GitHub workflow token is used by default.
 
@@ -17,6 +17,15 @@ Install jsonlint from the most recent release:
 - uses: prantlf/install-release-action@v1
   with:
     repo: prantlf/v-jsonlint
+```
+
+Install jsonlint from the compatible patch release recent release:
+
+```yml
+- uses: prantlf/install-release-action@v1
+  with:
+    repo: prantlf/v-jsonlint
+    version: ~0.0.1
 ```
 
 ## Inputs
@@ -34,7 +43,7 @@ Specify the repository in the form `owner/name` to download the archive with the
 Type: `String`<br>
 Default: `latest`
 
-Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version) or a semantic version number in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`).
+Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version), or a semantic version number, plain or in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`), or any semantic version specification.
 
 ### name
 
@@ -92,3 +101,4 @@ Copyright (C) 2023 Ferdinand Prantl
 Licensed under the [MIT License].
 
 [MIT License]: http://en.wikipedia.org/wiki/MIT_License
+[semantic version specification]: https://semver.org/

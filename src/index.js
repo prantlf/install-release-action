@@ -14,6 +14,7 @@ const httpm = require('@actions/http-client')
 const tc = require('@actions/tool-cache')
 const { access, symlink } = require('fs').promises
 const MersenneTwister = require('mersenne-twister')
+const { clean, satisfies, valid } = require('semver')
 
 const twister = new MersenneTwister(Math.random() * Number.MAX_SAFE_INTEGER)
 function getRandomValues(dest) {
@@ -70,16 +71,16 @@ const platformSuffixes = {
   win32: 'windows'
 }
 
-const semantic = /^v?\d+\.\d+\.\d+$/
-
 async function getRelease(token, name, repo, version) {
   const suffix = `-${platformSuffixes[platform()]}-${arch()}.zip`
   const archive = name && `${name}-${suffix}`
   const releases = await safeRequest(token, repo, 'releases')
   core.debug(`${releases.length} releases found`)
-  for (const { tag_name: tag, created_at: date, assets } of releases) {
+  for (let { tag_name: tag, created_at: date, assets } of releases) {
+    const cleanedTag = clean(tag)
+    if (cleanedTag) tag = cleanedTag;
     core.debug(`Check tag ${tag}`)
-    if (version ? tag === version : semantic.test(tag)) {
+    if (valid(tag) && (version === 'latest' || satisfies(tag, version))) {
       for (const { name: file, browser_download_url: url } of assets) {
         core.debug(`Check asset ${file}`)
         if (archive) {
@@ -92,13 +93,7 @@ async function getRelease(token, name, repo, version) {
       throw new Error(`archive "${archive ? archive : 'ending with ' + suffix}" not found in ${tag}`)
     }
   }
-  throw new Error(`version "${version ? version : 'latest'}" not found`)
-}
-
-function resolveVersion(token, name, repo, version) {
-  if (version === 'latest') return getRelease(token, name, repo)
-  if (semantic.test(version)) return getRelease(token, name, repo, version)
-  throw new Error(`unrecognised version "${version}"`)
+  throw new Error(`version "${version}" not found`)
 }
 
 async function getVersion(exePath) {
@@ -170,7 +165,9 @@ async function install(url, name, tag, useCache)  {
 async function run() {
   const repo = core.getInput('repo')
   if (!repo) throw new Error('missing repo')
-  const version = core.getInput('version')
+  let version = core.getInput('version')
+  const cleanedVersion = clean(version)
+  if (cleanedVersion) version = cleanedVersion;
   const name = core.getInput('name')
   const useCache = core.getBooleanInput('use-cache')
   core.info(`Download ${version} from ${repo}${name ? 'named ' + name : ''}${useCache ? '' : ', no cache'}`)
@@ -181,7 +178,7 @@ async function run() {
   if (workspace) workspace = resolve(workspace)
   else throw new Error('missing workspace')
 
-  const { name: name2, tag, date, url } = await resolveVersion(token, name, repo, version)
+  const { name: name2, tag, date, url } = await getRelease(token, name, repo, version)
   core.info(`Resolved ${name2} ${tag} from ${date} at ${url}`)
 
   const { exeDir, exePath, usedCache } = await install(url, name2, tag, useCache)

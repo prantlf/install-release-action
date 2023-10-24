@@ -42,6 +42,11 @@ jobs:
       uses: ./
       with:
         repo: prantlf/v-jsonlint
+    - name: Test semantic
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        version: '>=0.0.1'
 
   macos:
     runs-on: macos-latest
@@ -72,6 +77,11 @@ jobs:
       uses: ./
       with:
         repo: prantlf/v-jsonlint
+    - name: Test semantic
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        version: '>=0.0.1'
 
   windows:
     runs-on: windows-latest
@@ -100,6 +110,11 @@ jobs:
       uses: ./
       with:
         repo: prantlf/v-jsonlint
+    - name: Test semantic
+      uses: ./
+      with:
+        repo: prantlf/v-jsonlint
+        version: '>=0.0.1'
 
   release:
     needs:

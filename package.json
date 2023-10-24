@@ -62,7 +62,8 @@
     "builtins": "^5.0.1",
     "denolint": "^2.0.13",
     "mersenne-twister": "^1.1.0",
-    "rollup": "^4.1.4"
+    "rollup": "^4.1.4",
+    "semver": "^7.5.4"
   },
   "keywords": [
     "github-actions",

@@ -47,6 +47,9 @@ devDependencies:
   rollup:
     specifier: ^4.1.4
     version: 4.1.4
+  semver:
+    specifier: ^7.5.4
+    version: 7.5.4
 
 packages:
 
