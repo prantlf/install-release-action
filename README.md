@@ -5,7 +5,7 @@
 GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.
 
 * Simple syntax with defaults according to the best performance and practices.
-* Convenient version specification - `latest` or `X.Y.Z` or [semantic version specification].
+* Convenient version specification - `latest` or `X.Y.Z` or any [semantic version specification].
 * An already unpacked version is cached to speed up the build pipeline.
 * GitHub workflow token is used by default.
 
@@ -43,7 +43,7 @@ Specify the repository in the form `owner/name` to download the archive with the
 Type: `String`<br>
 Default: `latest`
 
-Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version), or a semantic version number, plain or in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`), or any semantic version specification.
+Specify the version of the executable to download and extract. It can be `latest` (the latest published semantic version), or a semantic version number, plain or in the form of a git tag (usually `vX.Y.Z`, but sometimes only `X.Y.Z`), or any [semantic version specification].
 
 ### name
 
