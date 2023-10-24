@@ -5,7 +5,7 @@
 GitHub action for downloading, extracting, caching an executable from a GitHub release and putting it to PATH.
 
 * Simple syntax with defaults according to the best performance and practices.
-* Convenient version specification - `latest` or `X.Y.Z` or semantic version specification.
+* Convenient version specification - `latest` or `X.Y.Z` or [semantic version specification].
 * An already unpacked version is cached to speed up the build pipeline.
 * GitHub workflow token is used by default.
 
