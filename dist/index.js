@@ -32217,11 +32217,17 @@ async function request(token, repo, path) {
     'X-GitHub-Api-Version': '2022-11-28'
 	});
   if (res.message.statusCode !== 200) {
-    const err = new Error(`${res.message.statusCode} ${res.message.statusMessage}`);
+    const err = new Error(`GET ${url} failed: ${res.message.statusCode} ${res.message.statusMessage}`);
     err.response = res;
     throw err
   }
   return JSON.parse(await res.readBody())
+}
+
+function delay() {
+  const delay = (5 + 5 * Math.random()) * 1000;
+  core.info(`Wait ${delay} ms before trying again`);
+  return new Promise(resolve => setTimeout(resolve, delay))
 }
 
 async function retry(action) {
@@ -32232,10 +32238,7 @@ async function retry(action) {
       if (++attempt === 3) throw err
       core.warning(err);
     }
-
-    const seconds = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
-    core.info(`Wait ${seconds} seconds before trying again`);
-    await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    await delay();
   }
 }
 
@@ -32251,7 +32254,7 @@ const platformSuffixes = {
 
 async function getRelease(token, name, repo, version) {
   const suffix = `-${platformSuffixes[platform()]}-${arch()}.zip`;
-  const archive = name && `${name}-${suffix}`;
+  const archive = name && `${name}${suffix}`;
   const releases = await safeRequest(token, repo, 'releases');
   core.debug(`${releases.length} releases found`);
   for (let { tag_name: tag, created_at: date, assets } of releases) {
@@ -32268,10 +32271,10 @@ async function getRelease(token, name, repo, version) {
           return { name, tag, date, url }
         }
       }
-      throw new Error(`archive "${archive ? archive : 'ending with ' + suffix}" not found in ${tag}`)
+      throw new Error(`archive ${archive ? '"' + archive + '"' : 'ending with ' + suffix} not found in ${tag}`)
     }
   }
-  throw new Error(`version "${version}" not found`)
+  throw new Error(`version matching "${version}" not found`)
 }
 
 async function getVersion(exePath) {
