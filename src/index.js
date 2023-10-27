@@ -73,7 +73,7 @@ const platformSuffixes = {
 
 async function getRelease(token, name, repo, version) {
   const suffix = `-${platformSuffixes[platform()]}-${arch()}.zip`
-  const archive = name && `${name}-${suffix}`
+  const archive = name && `${name}${suffix}`
   const releases = await safeRequest(token, repo, 'releases')
   core.debug(`${releases.length} releases found`)
   for (let { tag_name: tag, created_at: date, assets } of releases) {
@@ -90,10 +90,10 @@ async function getRelease(token, name, repo, version) {
           return { name, tag, date, url }
         }
       }
-      throw new Error(`archive "${archive ? archive : 'ending with ' + suffix}" not found in ${tag}`)
+      throw new Error(`archive ${archive ? '"' + archive + '"' : 'ending with ' + suffix} not found in ${tag}`)
     }
   }
-  throw new Error(`version "${version}" not found`)
+  throw new Error(`version matching "${version}" not found`)
 }
 
 async function getVersion(exePath) {
