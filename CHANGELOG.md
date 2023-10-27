@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/prantlf/install-release-action/compare/v1.0.5...v1.0.6) (2023-10-27)
+
+
+### Bug Fixes
+
+* Update built files ([02077e7](https://github.com/prantlf/install-release-action/commit/02077e7d7b9108d149fadd7262f4fea3db98eee4))
+
 ## [1.0.5](https://github.com/prantlf/install-release-action/compare/v1.0.4...v1.0.5) (2023-10-27)
 
 
