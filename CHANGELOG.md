@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/prantlf/install-release-action/compare/v1.0.4...v1.0.5) (2023-10-27)
+
+
+### Bug Fixes
+
+* Add URL to the failed request error message ([6c9d0fe](https://github.com/prantlf/install-release-action/commit/6c9d0fea3ad49904d7c01b5db43265f510066b5f))
+
 ## [1.0.4](https://github.com/prantlf/install-release-action/compare/v1.0.3...v1.0.4) (2023-10-27)
 
 
