@@ -39,7 +39,7 @@ async function request(token, repo, path) {
     'X-GitHub-Api-Version': '2022-11-28'
 	})
   if (res.message.statusCode !== 200) {
-    const err = new Error(`${res.message.statusCode} ${res.message.statusMessage}`)
+    const err = new Error(`GET ${url} failed: ${res.message.statusCode} ${res.message.statusMessage}`)
     err.response = res
     throw err
   }
