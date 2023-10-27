@@ -46,6 +46,12 @@ async function request(token, repo, path) {
   return JSON.parse(await res.readBody())
 }
 
+function delay() {
+  const delay = (5 + 5 * Math.random()) * 1000
+  core.info(`Wait ${delay} ms before trying again`)
+  return new Promise(resolve => setTimeout(resolve, delay))
+}
+
 async function retry(action) {
   for (let attempt = 0;;) {
     try {
@@ -54,10 +60,7 @@ async function retry(action) {
       if (++attempt === 3) throw err
       core.warning(err)
     }
-
-    const seconds = Math.floor(Math.random() * (20 - 10 + 1)) + 10
-    core.info(`Wait ${seconds} seconds before trying again`)
-    await new Promise(resolve => setTimeout(resolve, seconds * 1000))
+    await delay()
   }
 }
 
