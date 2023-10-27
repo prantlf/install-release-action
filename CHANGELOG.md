@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/prantlf/install-release-action/compare/v1.0.3...v1.0.4) (2023-10-27)
+
+
+### Bug Fixes
+
+* Remove extra dash from aechive formatted with explicit name ([f41ff4f](https://github.com/prantlf/install-release-action/commit/f41ff4f062621339f87e194adc43146c2feca2c2))
+* Wait 5-10s between failing network requet attempts ([6ee37a5](https://github.com/prantlf/install-release-action/commit/6ee37a58350687c2ddc276a5468878d4929e152b))
+
 ## [1.0.3](https://github.com/prantlf/install-release-action/compare/v1.0.2...v1.0.3) (2023-10-24)
 
 
