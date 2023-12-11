@@ -5,7 +5,6 @@ if (typeof global.crypto.getRandomValues !== 'function') {
   global.crypto.getRandomValues = getRandomValues
 }
 
-const { platform, arch } = require('os')
 const { join, resolve } = require('path')
 const core = require('@actions/core')
 const { exec } = require("@actions/exec")
@@ -15,6 +14,8 @@ const tc = require('@actions/tool-cache')
 const { access, symlink } = require('fs').promises
 const MersenneTwister = require('mersenne-twister')
 const { clean, satisfies, valid } = require('semver')
+
+const { arch, platform } = process
 
 const twister = new MersenneTwister(Math.random() * Number.MAX_SAFE_INTEGER)
 function getRandomValues(dest) {
@@ -69,14 +70,27 @@ function safeRequest(token, repo, path) {
 }
 
 const platformSuffixes = {
-  darwin: 'macos',
-  linux: 'linux',
-  win32: 'windows'
+  darwin: ['macos'],
+  linux: [],
+  win32: ['windows']
+}
+
+const archSuffixes = {
+  arm64: ['aarch64'],
+  x64: ['amd64', 'x86_64', 'x86']
+}
+
+function getArchiveSuffixes() {
+  const plats = platformSuffixes[platform] || []
+  if (!plats.includes(platform)) plats.push(platform)
+  const archs = archSuffixes[arch] || []
+  if (!archs.includes(arch)) archs.push(arch)
+  return plats.map(plat => archs.map(arch => `-${plat}-${arch}.zip`)).flat()
 }
 
 async function getRelease(token, name, repo, version) {
-  const suffix = `-${platformSuffixes[platform()]}-${arch()}.zip`
-  const archive = name && `${name}${suffix}`
+  const suffixes = getArchiveSuffixes()
+  const archives = name && suffixes.map(suffix => `${name}${suffix}`)
   const releases = await safeRequest(token, repo, 'releases')
   core.debug(`${releases.length} releases found`)
   for (let { tag_name: tag, created_at: date, assets } of releases) {
@@ -86,14 +100,17 @@ async function getRelease(token, name, repo, version) {
     if (valid(tag) && (version === 'latest' || satisfies(tag, version))) {
       for (const { name: file, browser_download_url: url } of assets) {
         core.debug(`Check asset ${file}`)
-        if (archive) {
-          if (file === archive) return { name, tag, date, url }
-        } else if (file.endsWith(suffix)) {
-          const name = file.substring(0, file.length - suffix.length)
-          return { name, tag, date, url }
+        if (archives) {
+          if (archives.includes(file)) return { name, tag, date, url }
+        } else {
+          const suffix = suffixes.find(suffix => file.endsWith(suffix))
+          if (suffix) {
+            const name = file.substring(0, file.length - suffix.length)
+            return { name, tag, date, url }
+          }
         }
       }
-      throw new Error(`archive ${archive ? '"' + archive + '"' : 'ending with ' + suffix} not found in ${tag}`)
+      throw new Error(`no suitable archive found for ${tag}`)
     }
   }
   throw new Error(`version matching "${version}" not found`)
@@ -114,7 +131,7 @@ async function getVersion(exePath) {
 async function install(url, name, tag, useCache)  {
   const exeDir = join(workspace, `../${name}-${tag}`)
   let exe = name
-  if (platform() === 'win32') exe += '.exe'
+  if (platform === 'win32') exe += '.exe'
   const exePath = join(exeDir, exe)
   core.debug(`Executable expected at "${exePath}"`)
 

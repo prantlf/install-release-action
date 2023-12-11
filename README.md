@@ -28,6 +28,16 @@ Install jsonlint from the compatible patch release recent release:
     version: ~0.0.1
 ```
 
+The archive with the executable is expected to be:
+
+    {name}-{platform}-{architecture}.zip
+
+where:
+
+* `{name}` is the name of the tool (executable)
+* `{platform}` is the name of the target platform: `linux`, `macos` or `windows`
+* `{architecture}` is the name of the target architecture: `aarch64` or `arm64` (64-bit ARM), `amd64`, `x86_64`, `x64` or `x86` (64-bit AMD)
+
 ## Inputs
 
 The following parameters can be specified using the `with` object:
