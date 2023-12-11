@@ -62,7 +62,7 @@
     "builtins": "^5.0.1",
     "denolint": "^2.0.14",
     "mersenne-twister": "^1.1.0",
-    "rollup": "^4.4.0",
+    "rollup": "^4.8.0",
     "semver": "^7.5.4"
   },
   "keywords": [
