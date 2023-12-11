@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/prantlf/install-release-action/compare/v1.0.6...v1.1.0) (2023-12-11)
+
+
+### Bug Fixes
+
+* Update built files ([b592ca3](https://github.com/prantlf/install-release-action/commit/b592ca347351657481cf51fbac33f9d0a10db897))
+
+
+### Features
+
+* Support different suffixes for arm64 and x64 ([8fdd0e8](https://github.com/prantlf/install-release-action/commit/8fdd0e8154403324acf676771d32838774eff159))
+
 ## [1.0.6](https://github.com/prantlf/install-release-action/compare/v1.0.5...v1.0.6) (2023-10-27)
 
 
