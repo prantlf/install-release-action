@@ -62,6 +62,27 @@ Default: (inferred from platform archives)
 
 Specify the name prefix of the archive to download and the name of the the executable to extract from it. If not specified, the first archive named `{name}-{platform}-{architecture}.zip` will be picked and the prefix `name` will be used.
 
+### platforms
+
+Type: `Map{String, String[]}`<br>
+Default:
+
+    darwin:macos
+    linux:
+    win32:windows
+
+A map where keys are Node.js platforms and values are their aliases which will be recognised in names of the installation archives. The Node.js platform name itself doesn't have to be included in the aliases. This input is a multi-line string, where each line is a map entry. The kay is separated from the value by colon (:). Aliases are separated by commas (,).
+
+### architectures
+
+Type: `Map{String, String[]}`<br>
+Default:
+
+      arm64:aarch64
+      x64:amd64,x86_64,x86
+
+A map where keys are Node.js architectures and values are their aliases which will be recognised in names of the installation archives. The Node.js architectures name itself doesn't have to be included in the aliases. This input is a multi-line string, where each line is a map entry. The kay is separated from the value by colon (:). Aliases are separated by commas (,).
+
 ### use-cache
 
 Type: `Boolean`<br>

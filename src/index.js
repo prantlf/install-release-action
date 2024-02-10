@@ -14,8 +14,10 @@ const tc = require('@actions/tool-cache')
 const { access, symlink } = require('fs').promises
 const MersenneTwister = require('mersenne-twister')
 const { clean, satisfies, valid } = require('semver')
+const { getMapOfArrays, getArchiveSuffixes } = require('./lib')
 
-const { arch, platform } = process
+const { platform } = process
+let platformSuffixes, archSuffixes
 
 const twister = new MersenneTwister(Math.random() * Number.MAX_SAFE_INTEGER)
 function getRandomValues(dest) {
@@ -69,27 +71,8 @@ function safeRequest(token, repo, path) {
   return retry(() => request(token, repo, path))
 }
 
-const platformSuffixes = {
-  darwin: ['macos'],
-  linux: [],
-  win32: ['windows']
-}
-
-const archSuffixes = {
-  arm64: ['aarch64'],
-  x64: ['amd64', 'x86_64', 'x86']
-}
-
-function getArchiveSuffixes() {
-  const plats = platformSuffixes[platform] || []
-  if (!plats.includes(platform)) plats.push(platform)
-  const archs = archSuffixes[arch] || []
-  if (!archs.includes(arch)) archs.push(arch)
-  return plats.map(plat => archs.map(arch => `-${plat}-${arch}.zip`)).flat()
-}
-
 async function getRelease(token, name, repo, version) {
-  const suffixes = getArchiveSuffixes()
+  const suffixes = getArchiveSuffixes(platformSuffixes, archSuffixes)
   const archives = name && suffixes.map(suffix => `${name}${suffix}`)
   const releases = await safeRequest(token, repo, 'releases')
   core.debug(`${releases.length} releases found`)
@@ -191,6 +174,8 @@ async function run() {
   const name = core.getInput('name')
   const useCache = core.getBooleanInput('use-cache')
   core.info(`Download ${version} from ${repo}${name ? 'named ' + name : ''}${useCache ? '' : ', no cache'}`)
+  platformSuffixes = getMapOfArrays('platforms')
+  archSuffixes = getMapOfArrays('architectures')
 
   const token = core.getInput('token') || envToken
   if (!token) throw new Error('missing token')
