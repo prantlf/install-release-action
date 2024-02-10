@@ -59,7 +59,7 @@ function getAugmentedNamespace(n) {
 
 var src = {};
 
-var core$3 = {};
+var core$4 = {};
 
 var command = {};
 
@@ -856,7 +856,7 @@ fileCommand.prepareKeyValueMessage = prepareKeyValueMessage;
 
 var oidcUtils = {};
 
-var lib = {};
+var lib$1 = {};
 
 var proxy = {};
 
@@ -23636,8 +23636,8 @@ var __awaiter$6 = (commonjsGlobal && commonjsGlobal.__awaiter) || function (this
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(lib, "__esModule", { value: true });
-lib.HttpClient = lib.isHttps = lib.HttpClientResponse = lib.HttpClientError = lib.getProxyUrl = lib.MediaTypes = lib.Headers = lib.HttpCodes = void 0;
+Object.defineProperty(lib$1, "__esModule", { value: true });
+lib$1.HttpClient = lib$1.isHttps = lib$1.HttpClientResponse = lib$1.HttpClientError = lib$1.getProxyUrl = lib$1.MediaTypes = lib$1.Headers = lib$1.HttpCodes = void 0;
 const http = __importStar$5(require$$2$1);
 const https = __importStar$5(require$$3);
 const pm = __importStar$5(proxy);
@@ -23672,16 +23672,16 @@ var HttpCodes;
     HttpCodes[HttpCodes["BadGateway"] = 502] = "BadGateway";
     HttpCodes[HttpCodes["ServiceUnavailable"] = 503] = "ServiceUnavailable";
     HttpCodes[HttpCodes["GatewayTimeout"] = 504] = "GatewayTimeout";
-})(HttpCodes || (lib.HttpCodes = HttpCodes = {}));
+})(HttpCodes || (lib$1.HttpCodes = HttpCodes = {}));
 var Headers;
 (function (Headers) {
     Headers["Accept"] = "accept";
     Headers["ContentType"] = "content-type";
-})(Headers || (lib.Headers = Headers = {}));
+})(Headers || (lib$1.Headers = Headers = {}));
 var MediaTypes;
 (function (MediaTypes) {
     MediaTypes["ApplicationJson"] = "application/json";
-})(MediaTypes || (lib.MediaTypes = MediaTypes = {}));
+})(MediaTypes || (lib$1.MediaTypes = MediaTypes = {}));
 /**
  * Returns the proxy URL, depending upon the supplied url and proxy environment variables.
  * @param serverUrl  The server URL where the request will be sent. For example, https://api.github.com
@@ -23690,7 +23690,7 @@ function getProxyUrl(serverUrl) {
     const proxyUrl = pm.getProxyUrl(new URL(serverUrl));
     return proxyUrl ? proxyUrl.href : '';
 }
-lib.getProxyUrl = getProxyUrl;
+lib$1.getProxyUrl = getProxyUrl;
 const HttpRedirectCodes = [
     HttpCodes.MovedPermanently,
     HttpCodes.ResourceMoved,
@@ -23714,7 +23714,7 @@ class HttpClientError extends Error {
         Object.setPrototypeOf(this, HttpClientError.prototype);
     }
 }
-lib.HttpClientError = HttpClientError;
+lib$1.HttpClientError = HttpClientError;
 class HttpClientResponse {
     constructor(message) {
         this.message = message;
@@ -23746,12 +23746,12 @@ class HttpClientResponse {
         });
     }
 }
-lib.HttpClientResponse = HttpClientResponse;
+lib$1.HttpClientResponse = HttpClientResponse;
 function isHttps(requestUrl) {
     const parsedUrl = new URL(requestUrl);
     return parsedUrl.protocol === 'https:';
 }
-lib.isHttps = isHttps;
+lib$1.isHttps = isHttps;
 class HttpClient {
     constructor(userAgent, handlers, requestOptions) {
         this._ignoreSslError = false;
@@ -24255,7 +24255,7 @@ class HttpClient {
         });
     }
 }
-lib.HttpClient = HttpClient;
+lib$1.HttpClient = HttpClient;
 const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCase()] = obj[k]), c), {});
 
 var auth = {};
@@ -24356,7 +24356,7 @@ function requireOidcUtils () {
 	};
 	Object.defineProperty(oidcUtils, "__esModule", { value: true });
 	oidcUtils.OidcClient = void 0;
-	const http_client_1 = lib;
+	const http_client_1 = lib$1;
 	const auth_1 = auth;
 	const core_1 = requireCore();
 	class OidcClient {
@@ -24788,7 +24788,7 @@ function requirePathUtils () {
 var hasRequiredCore;
 
 function requireCore () {
-	if (hasRequiredCore) return core$3;
+	if (hasRequiredCore) return core$4;
 	hasRequiredCore = 1;
 	(function (exports) {
 		var __createBinding = (commonjsGlobal && commonjsGlobal.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -25126,8 +25126,8 @@ function requireCore () {
 		Object.defineProperty(exports, "toWin32Path", { enumerable: true, get: function () { return path_utils_1.toWin32Path; } });
 		Object.defineProperty(exports, "toPlatformPath", { enumerable: true, get: function () { return path_utils_1.toPlatformPath; } });
 		
-	} (core$3));
-	return core$3;
+	} (core$4));
+	return core$4;
 }
 
 var exec$2 = {};
@@ -28225,7 +28225,7 @@ var __awaiter$1 = (commonjsGlobal && commonjsGlobal.__awaiter) || function (this
 };
 Object.defineProperty(retryHelper, "__esModule", { value: true });
 retryHelper.RetryHelper = void 0;
-const core$2 = __importStar$1(requireCore());
+const core$3 = __importStar$1(requireCore());
 /**
  * Internal class for retries
  */
@@ -28253,11 +28253,11 @@ class RetryHelper {
                     if (isRetryable && !isRetryable(err)) {
                         throw err;
                     }
-                    core$2.info(err.message);
+                    core$3.info(err.message);
                 }
                 // Sleep
                 const seconds = this.getSleepAmount();
-                core$2.info(`Waiting ${seconds} seconds before trying again`);
+                core$3.info(`Waiting ${seconds} seconds before trying again`);
                 yield this.sleep(seconds);
                 attempt++;
             }
@@ -28310,13 +28310,13 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
 };
 Object.defineProperty(toolCache, "__esModule", { value: true });
 toolCache.evaluateVersions = toolCache.isExplicitVersion = toolCache.findFromManifest = toolCache.getManifestFromRepo = toolCache.findAllVersions = toolCache.find = toolCache.cacheFile = toolCache.cacheDir = toolCache.extractZip = toolCache.extractXar = toolCache.extractTar = toolCache.extract7z = toolCache.downloadTool = toolCache.HTTPError = void 0;
-const core$1 = __importStar(requireCore());
+const core$2 = __importStar(requireCore());
 const io$1 = __importStar(io$3);
 const fs = __importStar(require$$0$1);
 const mm = __importStar(manifestExports);
 const os = __importStar(require$$0);
 const path = __importStar(require$$1$4);
-const httpm$1 = __importStar(lib);
+const httpm$1 = __importStar(lib$1);
 const semver$2 = __importStar(semverExports);
 const stream = __importStar(require$$0$4);
 const util = __importStar(require$$0$2);
@@ -28348,8 +28348,8 @@ function downloadTool(url, dest, auth, headers) {
     return __awaiter(this, void 0, void 0, function* () {
         dest = dest || path.join(_getTempDirectory(), v4_1.default());
         yield io$1.mkdirP(path.dirname(dest));
-        core$1.debug(`Downloading ${url}`);
-        core$1.debug(`Destination ${dest}`);
+        core$2.debug(`Downloading ${url}`);
+        core$2.debug(`Destination ${dest}`);
         const maxAttempts = 3;
         const minSeconds = _getGlobal('TEST_DOWNLOAD_TOOL_RETRY_MIN_SECONDS', 10);
         const maxSeconds = _getGlobal('TEST_DOWNLOAD_TOOL_RETRY_MAX_SECONDS', 20);
@@ -28381,7 +28381,7 @@ function downloadToolAttempt(url, dest, auth, headers) {
             allowRetries: false
         });
         if (auth) {
-            core$1.debug('set auth');
+            core$2.debug('set auth');
             if (headers === undefined) {
                 headers = {};
             }
@@ -28390,7 +28390,7 @@ function downloadToolAttempt(url, dest, auth, headers) {
         const response = yield http.get(url, headers);
         if (response.message.statusCode !== 200) {
             const err = new HTTPError(response.message.statusCode);
-            core$1.debug(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
+            core$2.debug(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
             throw err;
         }
         // Download the response body
@@ -28400,19 +28400,19 @@ function downloadToolAttempt(url, dest, auth, headers) {
         let succeeded = false;
         try {
             yield pipeline(readStream, fs.createWriteStream(dest));
-            core$1.debug('download complete');
+            core$2.debug('download complete');
             succeeded = true;
             return dest;
         }
         finally {
             // Error, delete dest before retry
             if (!succeeded) {
-                core$1.debug('download failed');
+                core$2.debug('download failed');
                 try {
                     yield io$1.rmRF(dest);
                 }
                 catch (err) {
-                    core$1.debug(`Failed to delete '${dest}'. ${err.message}`);
+                    core$2.debug(`Failed to delete '${dest}'. ${err.message}`);
                 }
             }
         }
@@ -28442,7 +28442,7 @@ function extract7z(file, dest, _7zPath) {
         process.chdir(dest);
         if (_7zPath) {
             try {
-                const logLevel = core$1.isDebug() ? '-bb1' : '-bb0';
+                const logLevel = core$2.isDebug() ? '-bb1' : '-bb0';
                 const args = [
                     'x',
                     logLevel,
@@ -28508,7 +28508,7 @@ function extractTar(file, dest, flags = 'xz') {
         // Create dest
         dest = yield _createExtractFolder(dest);
         // Determine whether GNU tar
-        core$1.debug('Checking tar --version');
+        core$2.debug('Checking tar --version');
         let versionOutput = '';
         yield exec_1.exec('tar --version', [], {
             ignoreReturnCode: true,
@@ -28518,7 +28518,7 @@ function extractTar(file, dest, flags = 'xz') {
                 stderr: (data) => (versionOutput += data.toString())
             }
         });
-        core$1.debug(versionOutput.trim());
+        core$2.debug(versionOutput.trim());
         const isGnuTar = versionOutput.toUpperCase().includes('GNU TAR');
         // Initialize args
         let args;
@@ -28528,7 +28528,7 @@ function extractTar(file, dest, flags = 'xz') {
         else {
             args = [flags];
         }
-        if (core$1.isDebug() && !flags.includes('v')) {
+        if (core$2.isDebug() && !flags.includes('v')) {
             args.push('-v');
         }
         let destArg = dest;
@@ -28572,7 +28572,7 @@ function extractXar(file, dest, flags = []) {
             args = [flags];
         }
         args.push('-x', '-C', dest, '-f', file);
-        if (core$1.isDebug()) {
+        if (core$2.isDebug()) {
             args.push('-v');
         }
         const xarPath = yield io$1.which('xar', true);
@@ -28629,7 +28629,7 @@ function extractZipWin(file, dest) {
                 '-Command',
                 pwshCommand
             ];
-            core$1.debug(`Using pwsh at path: ${pwshPath}`);
+            core$2.debug(`Using pwsh at path: ${pwshPath}`);
             yield exec_1.exec(`"${pwshPath}"`, args);
         }
         else {
@@ -28650,7 +28650,7 @@ function extractZipWin(file, dest) {
                 powershellCommand
             ];
             const powershellPath = yield io$1.which('powershell', true);
-            core$1.debug(`Using powershell at path: ${powershellPath}`);
+            core$2.debug(`Using powershell at path: ${powershellPath}`);
             yield exec_1.exec(`"${powershellPath}"`, args);
         }
     });
@@ -28659,7 +28659,7 @@ function extractZipNix(file, dest) {
     return __awaiter(this, void 0, void 0, function* () {
         const unzipPath = yield io$1.which('unzip', true);
         const args = [file];
-        if (!core$1.isDebug()) {
+        if (!core$2.isDebug()) {
             args.unshift('-q');
         }
         args.unshift('-o'); //overwrite with -o, otherwise a prompt is shown which freezes the run
@@ -28678,8 +28678,8 @@ function cacheDir(sourceDir, tool, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
         version = semver$2.clean(version) || version;
         arch = arch || os.arch();
-        core$1.debug(`Caching tool ${tool} ${version} ${arch}`);
-        core$1.debug(`source dir: ${sourceDir}`);
+        core$2.debug(`Caching tool ${tool} ${version} ${arch}`);
+        core$2.debug(`source dir: ${sourceDir}`);
         if (!fs.statSync(sourceDir).isDirectory()) {
             throw new Error('sourceDir is not a directory');
         }
@@ -28711,8 +28711,8 @@ function cacheFile(sourceFile, targetFile, tool, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
         version = semver$2.clean(version) || version;
         arch = arch || os.arch();
-        core$1.debug(`Caching tool ${tool} ${version} ${arch}`);
-        core$1.debug(`source file: ${sourceFile}`);
+        core$2.debug(`Caching tool ${tool} ${version} ${arch}`);
+        core$2.debug(`source file: ${sourceFile}`);
         if (!fs.statSync(sourceFile).isFile()) {
             throw new Error('sourceFile is not a file');
         }
@@ -28721,7 +28721,7 @@ function cacheFile(sourceFile, targetFile, tool, version, arch) {
         // copy instead of move. move can fail on Windows due to
         // anti-virus software having an open handle on a file.
         const destPath = path.join(destFolder, targetFile);
-        core$1.debug(`destination file ${destPath}`);
+        core$2.debug(`destination file ${destPath}`);
         yield io$1.cp(sourceFile, destPath);
         // write .complete
         _completeToolPath(tool, version, arch);
@@ -28755,13 +28755,13 @@ function find(toolName, versionSpec, arch) {
     if (versionSpec) {
         versionSpec = semver$2.clean(versionSpec) || '';
         const cachePath = path.join(_getCacheDirectory(), toolName, versionSpec, arch);
-        core$1.debug(`checking cache: ${cachePath}`);
+        core$2.debug(`checking cache: ${cachePath}`);
         if (fs.existsSync(cachePath) && fs.existsSync(`${cachePath}.complete`)) {
-            core$1.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch}`);
+            core$2.debug(`Found tool in cache ${toolName} ${versionSpec} ${arch}`);
             toolPath = cachePath;
         }
         else {
-            core$1.debug('not found');
+            core$2.debug('not found');
         }
     }
     return toolPath;
@@ -28798,7 +28798,7 @@ function getManifestFromRepo(owner, repo, auth, branch = 'master') {
         const http = new httpm$1.HttpClient('tool-cache');
         const headers = {};
         if (auth) {
-            core$1.debug('set auth');
+            core$2.debug('set auth');
             headers.authorization = auth;
         }
         const response = yield http.getJson(treeUrl, headers);
@@ -28821,7 +28821,7 @@ function getManifestFromRepo(owner, repo, auth, branch = 'master') {
                 releases = JSON.parse(versionsRaw);
             }
             catch (_a) {
-                core$1.debug('Invalid json');
+                core$2.debug('Invalid json');
             }
         }
         return releases;
@@ -28849,7 +28849,7 @@ function _createExtractFolder(dest) {
 function _createToolPath(tool, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
         const folderPath = path.join(_getCacheDirectory(), tool, semver$2.clean(version) || version, arch || '');
-        core$1.debug(`destination ${folderPath}`);
+        core$2.debug(`destination ${folderPath}`);
         const markerPath = `${folderPath}.complete`;
         yield io$1.rmRF(folderPath);
         yield io$1.rmRF(markerPath);
@@ -28861,7 +28861,7 @@ function _completeToolPath(tool, version, arch) {
     const folderPath = path.join(_getCacheDirectory(), tool, semver$2.clean(version) || version, arch || '');
     const markerPath = `${folderPath}.complete`;
     fs.writeFileSync(markerPath, '');
-    core$1.debug('finished caching tool');
+    core$2.debug('finished caching tool');
 }
 /**
  * Check if version string is explicit
@@ -28870,9 +28870,9 @@ function _completeToolPath(tool, version, arch) {
  */
 function isExplicitVersion(versionSpec) {
     const c = semver$2.clean(versionSpec) || '';
-    core$1.debug(`isExplicit: ${c}`);
+    core$2.debug(`isExplicit: ${c}`);
     const valid = semver$2.valid(c) != null;
-    core$1.debug(`explicit? ${valid}`);
+    core$2.debug(`explicit? ${valid}`);
     return valid;
 }
 toolCache.isExplicitVersion = isExplicitVersion;
@@ -28884,7 +28884,7 @@ toolCache.isExplicitVersion = isExplicitVersion;
  */
 function evaluateVersions(versions, versionSpec) {
     let version = '';
-    core$1.debug(`evaluating ${versions.length} versions`);
+    core$2.debug(`evaluating ${versions.length} versions`);
     versions = versions.sort((a, b) => {
         if (semver$2.gt(a, b)) {
             return 1;
@@ -28900,10 +28900,10 @@ function evaluateVersions(versions, versionSpec) {
         }
     }
     if (version) {
-        core$1.debug(`matched: ${version}`);
+        core$2.debug(`matched: ${version}`);
     }
     else {
-        core$1.debug('match not found');
+        core$2.debug('match not found');
     }
     return version;
 }
@@ -29357,12 +29357,17 @@ var debug_1 = debug$1;
 
 	// Coercion.
 	// Extract anything that could conceivably be a part of a valid semver
-	createToken('COERCE', `${'(^|[^\\d])' +
+	createToken('COERCEPLAIN', `${'(^|[^\\d])' +
 	              '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` +
 	              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
-	              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
+	              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`);
+	createToken('COERCE', `${src[t.COERCEPLAIN]}(?:$|[^\\d])`);
+	createToken('COERCEFULL', src[t.COERCEPLAIN] +
+	              `(?:${src[t.PRERELEASE]})?` +
+	              `(?:${src[t.BUILD]})?` +
 	              `(?:$|[^\\d])`);
 	createToken('COERCERTL', src[t.COERCE], true);
+	createToken('COERCERTLFULL', src[t.COERCEFULL], true);
 
 	// Tilde ranges.
 	// Meaning is "reasonably at or greater than"
@@ -30024,35 +30029,43 @@ const coerce$1 = (version, options) => {
 
   let match = null;
   if (!options.rtl) {
-    match = version.match(re[t.COERCE]);
+    match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
   } else {
     // Find the right-most coercible string that does not share
     // a terminus with a more left-ward coercible string.
     // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
+    // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
     //
     // Walk through the string checking with a /g regexp
     // Manually set the index so as to pick up overlapping matches.
     // Stop when we get a match that ends at the string end, since no
     // coercible string can be more right-ward without the same terminus.
+    const coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
     let next;
-    while ((next = re[t.COERCERTL].exec(version)) &&
+    while ((next = coerceRtlRegex.exec(version)) &&
         (!match || match.index + match[0].length !== version.length)
     ) {
       if (!match ||
             next.index + next[0].length !== match.index + match[0].length) {
         match = next;
       }
-      re[t.COERCERTL].lastIndex = next.index + next[1].length + next[2].length;
+      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
     }
     // leave it in a clean state
-    re[t.COERCERTL].lastIndex = -1;
+    coerceRtlRegex.lastIndex = -1;
   }
 
   if (match === null) {
     return null
   }
 
-  return parse$1(`${match[2]}.${match[3] || '0'}.${match[4] || '0'}`, options)
+  const major = match[2];
+  const minor = match[3] || '0';
+  const patch = match[4] || '0';
+  const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : '';
+  const build = options.includePrerelease && match[6] ? `+${match[6]}` : '';
+
+  return parse$1(`${major}.${minor}.${patch}${prerelease}${build}`, options)
 };
 var coerce_1 = coerce$1;
 
@@ -32176,6 +32189,35 @@ var semver = {
   rcompareIdentifiers: identifiers.rcompareIdentifiers,
 };
 
+var lib = {};
+
+const core$1 = requireCore();
+
+const { arch, platform: platform$1 } = process;
+
+lib.getMapOfArrays = function getMapOfArrays(name) {
+  return core$1.getInput(name)
+    .split(/\r?\n/)
+    .reduce((map, line) => {
+      let [plat, aliases] = line.split(':');
+      plat = plat.trim();
+      if (!plat) return map
+      map[plat] = aliases
+        .split(',')
+        .map(arch => arch.trim())
+        .filter(arch => arch);
+      return map
+    }, {})
+};
+
+lib.getArchiveSuffixes = function getArchiveSuffixes(platformSuffixes, archSuffixes) {
+  const plats = platformSuffixes[platform$1] || [];
+  if (!plats.includes(platform$1)) plats.push(platform$1);
+  const archs = archSuffixes[arch] || [];
+  if (!archs.includes(arch)) archs.push(arch);
+  return plats.map(plat => archs.map(arch => `-${plat}-${arch}.zip`)).flat()
+};
+
 if (typeof commonjsGlobal.crypto !== 'object') {
   commonjsGlobal.crypto = {};
 }
@@ -32187,13 +32229,15 @@ const { join, resolve } = require$$1$4;
 const core = requireCore();
 const { exec } = exec$2;
 const io = io$3;
-const httpm = lib;
+const httpm = lib$1;
 const tc = toolCache;
 const { access, symlink } = require$$0$1.promises;
 const MersenneTwister = mersenneTwister;
 const { clean, satisfies, valid } = semver;
+const { getMapOfArrays, getArchiveSuffixes } = lib;
 
-const { arch, platform } = process;
+const { platform } = process;
+let platformSuffixes, archSuffixes;
 
 const twister = new MersenneTwister(Math.random() * Number.MAX_SAFE_INTEGER);
 function getRandomValues(dest) {
@@ -32247,27 +32291,8 @@ function safeRequest(token, repo, path) {
   return retry(() => request(token, repo, path))
 }
 
-const platformSuffixes = {
-  darwin: ['macos'],
-  linux: [],
-  win32: ['windows']
-};
-
-const archSuffixes = {
-  arm64: ['aarch64'],
-  x64: ['amd64', 'x86_64', 'x86']
-};
-
-function getArchiveSuffixes() {
-  const plats = platformSuffixes[platform] || [];
-  if (!plats.includes(platform)) plats.push(platform);
-  const archs = archSuffixes[arch] || [];
-  if (!archs.includes(arch)) archs.push(arch);
-  return plats.map(plat => archs.map(arch => `-${plat}-${arch}.zip`)).flat()
-}
-
 async function getRelease(token, name, repo, version) {
-  const suffixes = getArchiveSuffixes();
+  const suffixes = getArchiveSuffixes(platformSuffixes, archSuffixes);
   const archives = name && suffixes.map(suffix => `${name}${suffix}`);
   const releases = await safeRequest(token, repo, 'releases');
   core.debug(`${releases.length} releases found`);
@@ -32369,6 +32394,8 @@ async function run() {
   const name = core.getInput('name');
   const useCache = core.getBooleanInput('use-cache');
   core.info(`Download ${version} from ${repo}${name ? 'named ' + name : ''}${useCache ? '' : ', no cache'}`);
+  platformSuffixes = getMapOfArrays('platforms');
+  archSuffixes = getMapOfArrays('architectures');
 
   const token = core.getInput('token') || envToken;
   if (!token) throw new Error('missing token')
