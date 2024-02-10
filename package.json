@@ -31,7 +31,10 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "denolint"
+    "lint": "denolint",
+    "check": "node --test",
+    "coverage": "node --test --experimental-test-coverage",
+    "test": "denolint && node --test"
   },
   "release": {
     "plugins": [
