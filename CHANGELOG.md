@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/prantlf/install-release-action/compare/v1.1.0...v1.2.0) (2024-02-11)
+
+
+### Bug Fixes
+
+* Update built files ([a76fb75](https://github.com/prantlf/install-release-action/commit/a76fb750b2f6223d176a791a16cbe837d5a4b1d2))
+* Upgrade dependencies ([547c933](https://github.com/prantlf/install-release-action/commit/547c933802590a4063ac3b650b3b7cd6c8fc83cb))
+
+
+### Features
+
+* Add parameters for platform and architecture aliases ([8a1c23b](https://github.com/prantlf/install-release-action/commit/8a1c23bbc2865350ac10424b8bdaec2cfc035e5e))
+
 # [1.1.0](https://github.com/prantlf/install-release-action/compare/v1.0.6...v1.1.0) (2023-12-11)
 
 
