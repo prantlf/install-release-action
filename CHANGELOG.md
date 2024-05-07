@@ -1,5 +1,12 @@
 # Changes
 
+## [1.2.1](https://github.com/prantlf/install-release-action/compare/v1.2.0...v1.2.1) (2024-05-07)
+
+### Bug Fixes
+
+* Upgrade dependencies ([acfd0f0](https://github.com/prantlf/install-release-action/commit/acfd0f08e527693d0e97c4a110a4a951d7f797e1))
+* Update built files ([5308968](https://github.com/prantlf/install-release-action/commit/5308968a1147a4209291dbf89ee746dc03ada91a))
+
 ## [1.2.0](https://github.com/prantlf/install-release-action/compare/v1.1.0...v1.2.0) (2024-02-11)
 
 ### Bug Fixes
