@@ -22,5 +22,5 @@ exports.getArchiveSuffixes = function getArchiveSuffixes(platformSuffixes, archS
   if (!plats.includes(platform)) plats.push(platform)
   const archs = archSuffixes[arch] || []
   if (!archs.includes(arch)) archs.push(arch)
-  return plats.map(plat => archs.map(arch => `-${plat}-${arch}.zip`)).flat()
+  return plats.flatMap(plat => archs.map(arch => `-${plat}-${arch}.zip`))
 }

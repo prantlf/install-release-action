@@ -12,6 +12,7 @@ const platforms = {
 
 const archives = {
   arm64: ['aarch64'],
+  riscv64: [],
   x64: ['amd64', 'x86_64', 'x86']
 }
 
@@ -41,6 +42,9 @@ const expected = {
   'linux-arm64': [
     '-linux-arm64.zip',
     '-linux-aarch64.zip'
+  ],
+  'linux-riscv64': [
+    '-linux-riscv64.zip'
   ],
   'win32-x64': [
     '-win-amd64.zip',

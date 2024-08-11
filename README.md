@@ -36,7 +36,7 @@ where:
 
 * `{name}` is the name of the tool (executable)
 * `{platform}` is the name of the target platform: `linux`, `macos` or `windows`
-* `{architecture}` is the name of the target architecture: `aarch64` or `arm64` (64-bit ARM), `amd64`, `x86_64`, `x64` or `x86` (64-bit AMD)
+* `{architecture}` is the name of the target architecture: `aarch64` or `arm64` (64-bit ARM), `riscv64` (RISC-V), `amd64`, `x86_64`, `x64` (64-bit AMD) or `x86` (32-bit Intel)
 
 ## Inputs
 
@@ -79,6 +79,7 @@ Type: `Map{String, String[]}`<br>
 Default:
 
       arm64:aarch64
+      riscv64:
       x64:amd64,x86_64,x86
 
 A map where keys are Node.js architectures and values are their aliases which will be recognised in names of the installation archives. The Node.js architectures name itself doesn't have to be included in the aliases. This input is a multi-line string, where each line is a map entry. The kay is separated from the value by colon (:). Aliases are separated by commas (,).

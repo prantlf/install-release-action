@@ -5,19 +5,20 @@ if (typeof global.crypto.getRandomValues !== 'function') {
   global.crypto.getRandomValues = getRandomValues
 }
 
-const { join, resolve } = require('path')
+const { join, resolve } = require('node:path')
 const core = require('@actions/core')
 const { exec } = require("@actions/exec")
 const io = require('@actions/io')
 const httpm = require('@actions/http-client')
 const tc = require('@actions/tool-cache')
-const { access, symlink } = require('fs').promises
+const { access, symlink } = require('node:fs').promises
 const MersenneTwister = require('mersenne-twister')
 const { clean, satisfies, valid } = require('semver')
 const { getMapOfArrays, getArchiveSuffixes } = require('./lib')
 
 const { platform } = process
-let platformSuffixes, archSuffixes
+let platformSuffixes
+let archSuffixes
 
 const twister = new MersenneTwister(Math.random() * Number.MAX_SAFE_INTEGER)
 function getRandomValues(dest) {
@@ -173,7 +174,7 @@ async function run() {
   if (cleanedVersion) version = cleanedVersion;
   const name = core.getInput('name')
   const useCache = core.getBooleanInput('use-cache')
-  core.info(`Download ${version} from ${repo}${name ? 'named ' + name : ''}${useCache ? '' : ', no cache'}`)
+  core.info(`Download ${version} from ${repo}${name ? `named ${name}` : ''}${useCache ? '' : ', no cache'}`)
   platformSuffixes = getMapOfArrays('platforms')
   archSuffixes = getMapOfArrays('architectures')
 
