@@ -1,5 +1,15 @@
 # Changes
 
+## [1.3.0](https://github.com/prantlf/install-release-action/compare/v1.2.1...v1.3.0) (2024-08-11)
+
+### Features
+
+* Add support for riscv64 ([7121c78](https://github.com/prantlf/install-release-action/commit/7121c784646df8c2487270f904c7e006c20434c1))
+
+### Bug Fixes
+
+* Update built files ([eed44bc](https://github.com/prantlf/install-release-action/commit/eed44bc8b85d2195a4aafaf35cc41aa51f22f21b))
+
 ## [1.2.1](https://github.com/prantlf/install-release-action/compare/v1.2.0...v1.2.1) (2024-05-07)
 
 ### Bug Fixes
