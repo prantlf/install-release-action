@@ -1,68 +1,44 @@
-'use strict';
-
-var promises = require('node:fs/promises');
-var node_path = require('node:path');
-var os = require('os');
-var crypto = require('crypto');
-var fs = require('fs');
-var path = require('path');
-var http = require('http');
-var https = require('https');
-require('net');
-var require$$1 = require('tls');
-var events$1 = require('events');
-var require$$5$4 = require('assert');
-var require$$6 = require('util');
-var require$$0$1 = require('node:assert');
-var require$$0$3 = require('node:net');
-var require$$2 = require('node:http');
-var require$$0$2 = require('node:stream');
-var require$$0 = require('node:buffer');
-var require$$0$4 = require('node:util');
-var require$$7 = require('node:querystring');
-var require$$8 = require('node:events');
-var require$$0$5 = require('node:diagnostics_channel');
-var require$$5 = require('node:tls');
-var require$$1$2 = require('node:zlib');
-var require$$5$1 = require('node:perf_hooks');
-var require$$8$1 = require('node:util/types');
-var require$$1$1 = require('node:worker_threads');
-var require$$1$3 = require('node:url');
-var require$$5$2 = require('node:async_hooks');
-var require$$1$4 = require('node:console');
-var require$$1$5 = require('node:dns');
-var require$$5$3 = require('string_decoder');
-var child = require('child_process');
-var timers$1 = require('timers');
-var stream = require('stream');
-
-function _interopNamespaceDefault(e) {
-    var n = Object.create(null);
-    if (e) {
-        Object.keys(e).forEach(function (k) {
-            if (k !== 'default') {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
-        });
-    }
-    n.default = e;
-    return Object.freeze(n);
-}
-
-var os__namespace = /*#__PURE__*/_interopNamespaceDefault(os);
-var crypto__namespace = /*#__PURE__*/_interopNamespaceDefault(crypto);
-var fs__namespace = /*#__PURE__*/_interopNamespaceDefault(fs);
-var path__namespace = /*#__PURE__*/_interopNamespaceDefault(path);
-var http__namespace = /*#__PURE__*/_interopNamespaceDefault(http);
-var https__namespace = /*#__PURE__*/_interopNamespaceDefault(https);
-var events__namespace = /*#__PURE__*/_interopNamespaceDefault(events$1);
-var require$$6__namespace = /*#__PURE__*/_interopNamespaceDefault(require$$6);
-var child__namespace = /*#__PURE__*/_interopNamespaceDefault(child);
-var stream__namespace = /*#__PURE__*/_interopNamespaceDefault(stream);
+import { symlink as symlink$1, access as access$1 } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import * as os from 'os';
+import os__default from 'os';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
+import { promises } from 'fs';
+import * as path from 'path';
+import * as http from 'http';
+import http__default from 'http';
+import * as https from 'https';
+import https__default from 'https';
+import 'net';
+import require$$1 from 'tls';
+import * as events$1 from 'events';
+import events__default from 'events';
+import { ok } from 'assert';
+import * as require$$6 from 'util';
+import require$$6__default from 'util';
+import require$$0$1 from 'node:assert';
+import require$$0$3 from 'node:net';
+import require$$2 from 'node:http';
+import require$$0$2 from 'node:stream';
+import require$$0 from 'node:buffer';
+import require$$0$4 from 'node:util';
+import require$$7 from 'node:querystring';
+import require$$8 from 'node:events';
+import require$$0$5 from 'node:diagnostics_channel';
+import require$$5 from 'node:tls';
+import require$$1$2 from 'node:zlib';
+import require$$5$1 from 'node:perf_hooks';
+import require$$8$1 from 'node:util/types';
+import require$$1$1 from 'node:worker_threads';
+import require$$1$3 from 'node:url';
+import require$$5$2 from 'node:async_hooks';
+import require$$1$4 from 'node:console';
+import require$$1$5 from 'node:dns';
+import require$$5$3 from 'string_decoder';
+import * as child from 'child_process';
+import { setTimeout as setTimeout$1 } from 'timers';
+import * as stream from 'stream';
 
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -134,7 +110,7 @@ function toCommandProperties(annotationProperties) {
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    process.stdout.write(cmd.toString() + os__namespace.EOL);
+    process.stdout.write(cmd.toString() + os.EOL);
 }
 const CMD_STRING = '::';
 class Command {
@@ -193,15 +169,15 @@ function issueFileCommand(command, message) {
     if (!filePath) {
         throw new Error(`Unable to find environment variable for file command ${command}`);
     }
-    if (!fs__namespace.existsSync(filePath)) {
+    if (!fs.existsSync(filePath)) {
         throw new Error(`Missing file at path: ${filePath}`);
     }
-    fs__namespace.appendFileSync(filePath, `${toCommandValue(message)}${os__namespace.EOL}`, {
+    fs.appendFileSync(filePath, `${toCommandValue(message)}${os.EOL}`, {
         encoding: 'utf8'
     });
 }
 function prepareKeyValueMessage(key, value) {
-    const delimiter = `ghadelimiter_${crypto__namespace.randomUUID()}`;
+    const delimiter = `ghadelimiter_${crypto.randomUUID()}`;
     const convertedValue = toCommandValue(value);
     // These should realistically never happen, but just in case someone finds a
     // way to exploit uuid generation let's not allow keys or values that contain
@@ -212,7 +188,7 @@ function prepareKeyValueMessage(key, value) {
     if (convertedValue.includes(delimiter)) {
         throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
     }
-    return `${key}<<${delimiter}${os__namespace.EOL}${convertedValue}${os__namespace.EOL}${delimiter}`;
+    return `${key}<<${delimiter}${os.EOL}${convertedValue}${os.EOL}${delimiter}`;
 }
 
 function getProxyUrl(reqUrl) {
@@ -319,10 +295,10 @@ function requireTunnel$1 () {
 	if (hasRequiredTunnel$1) return tunnel$1;
 	hasRequiredTunnel$1 = 1;
 	var tls = require$$1;
-	var http$1 = http;
-	var https$1 = https;
-	var events = events$1;
-	var util = require$$6;
+	var http = http__default;
+	var https = https__default;
+	var events = events__default;
+	var util = require$$6__default;
 
 
 	tunnel$1.httpOverHttp = httpOverHttp;
@@ -333,13 +309,13 @@ function requireTunnel$1 () {
 
 	function httpOverHttp(options) {
 	  var agent = new TunnelingAgent(options);
-	  agent.request = http$1.request;
+	  agent.request = http.request;
 	  return agent;
 	}
 
 	function httpsOverHttp(options) {
 	  var agent = new TunnelingAgent(options);
-	  agent.request = http$1.request;
+	  agent.request = http.request;
 	  agent.createSocket = createSecureSocket;
 	  agent.defaultPort = 443;
 	  return agent;
@@ -347,13 +323,13 @@ function requireTunnel$1 () {
 
 	function httpOverHttps(options) {
 	  var agent = new TunnelingAgent(options);
-	  agent.request = https$1.request;
+	  agent.request = https.request;
 	  return agent;
 	}
 
 	function httpsOverHttps(options) {
 	  var agent = new TunnelingAgent(options);
-	  agent.request = https$1.request;
+	  agent.request = https.request;
 	  agent.createSocket = createSecureSocket;
 	  agent.defaultPort = 443;
 	  return agent;
@@ -364,7 +340,7 @@ function requireTunnel$1 () {
 	  var self = this;
 	  self.options = options || {};
 	  self.proxyOptions = self.options.proxy || {};
-	  self.maxSockets = self.options.maxSockets || http$1.Agent.defaultMaxSockets;
+	  self.maxSockets = self.options.maxSockets || http.Agent.defaultMaxSockets;
 	  self.requests = [];
 	  self.sockets = [];
 
@@ -28602,7 +28578,7 @@ class HttpClient {
         const info = {};
         info.parsedUrl = requestUrl;
         const usingSsl = info.parsedUrl.protocol === 'https:';
-        info.httpModule = usingSsl ? https__namespace : http__namespace;
+        info.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
         info.options = {};
         info.options.host = info.parsedUrl.hostname;
@@ -28716,7 +28692,7 @@ class HttpClient {
         const usingSsl = parsedUrl.protocol === 'https:';
         let maxSockets = 100;
         if (this.requestOptions) {
-            maxSockets = this.requestOptions.maxSockets || http__namespace.globalAgent.maxSockets;
+            maxSockets = this.requestOptions.maxSockets || http.globalAgent.maxSockets;
         }
         // This is `useProxy` again, but we need to check `proxyURl` directly for TypeScripts's flow analysis.
         if (proxyUrl && proxyUrl.hostname) {
@@ -28741,7 +28717,7 @@ class HttpClient {
         // if tunneling agent isn't assigned create a new agent
         if (!agent) {
             const options = { keepAlive: this._keepAlive, maxSockets };
-            agent = usingSsl ? new https__namespace.Agent(options) : new http__namespace.Agent(options);
+            agent = usingSsl ? new https.Agent(options) : new http.Agent(options);
             this._agent = agent;
         }
         if (usingSsl && this._ignoreSslError) {
@@ -28893,7 +28869,7 @@ const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCa
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { access, appendFile, writeFile } = fs.promises;
+const { access, appendFile, writeFile } = promises;
 
 var __awaiter$5 = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -28904,7 +28880,7 @@ var __awaiter$5 = (undefined && undefined.__awaiter) || function (thisArg, _argu
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { chmod, copyFile: copyFile$1, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs__namespace.promises;
+const { chmod, copyFile: copyFile$1, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs.promises;
 // export const {open} = 'fs'
 const IS_WINDOWS$2 = process.platform === 'win32';
 /**
@@ -28920,7 +28896,7 @@ const IS_WINDOWS$2 = process.platform === 'win32';
  */
 function readlink(fsPath) {
     return __awaiter$5(this, void 0, void 0, function* () {
-        const result = yield fs__namespace.promises.readlink(fsPath);
+        const result = yield fs.promises.readlink(fsPath);
         // On Windows, restore Node 20 behavior: add trailing backslash to all results
         // since junctions on Windows are always directory links
         if (IS_WINDOWS$2 && !result.endsWith('\\')) {
@@ -28929,7 +28905,7 @@ function readlink(fsPath) {
         return result;
     });
 }
-fs__namespace.constants.O_RDONLY;
+fs.constants.O_RDONLY;
 function exists$1(fsPath) {
     return __awaiter$5(this, void 0, void 0, function* () {
         try {
@@ -28981,7 +28957,7 @@ function tryGetExecutablePath(filePath, extensions) {
         if (stats && stats.isFile()) {
             if (IS_WINDOWS$2) {
                 // on Windows, test for valid extension
-                const upperExt = path__namespace.extname(filePath).toUpperCase();
+                const upperExt = path.extname(filePath).toUpperCase();
                 if (extensions.some(validExt => validExt.toUpperCase() === upperExt)) {
                     return filePath;
                 }
@@ -29010,11 +28986,11 @@ function tryGetExecutablePath(filePath, extensions) {
                 if (IS_WINDOWS$2) {
                     // preserve the case of the actual file (since an extension was appended)
                     try {
-                        const directory = path__namespace.dirname(filePath);
-                        const upperName = path__namespace.basename(filePath).toUpperCase();
+                        const directory = path.dirname(filePath);
+                        const upperName = path.basename(filePath).toUpperCase();
                         for (const actualName of yield readdir(directory)) {
                             if (upperName === actualName.toUpperCase()) {
-                                filePath = path__namespace.join(directory, actualName);
+                                filePath = path.join(directory, actualName);
                                 break;
                             }
                         }
@@ -29086,7 +29062,7 @@ function cp(source_1, dest_1) {
         }
         // If dest is an existing directory, should copy inside.
         const newDest = destStat && destStat.isDirectory() && copySourceDirectory
-            ? path__namespace.join(dest, path__namespace.basename(source))
+            ? path.join(dest, path.basename(source))
             : dest;
         if (!(yield exists$1(source))) {
             throw new Error(`no such file or directory: ${source}`);
@@ -29101,7 +29077,7 @@ function cp(source_1, dest_1) {
             }
         }
         else {
-            if (path__namespace.relative(source, newDest) === '') {
+            if (path.relative(source, newDest) === '') {
                 // a file cannot be copied to itself
                 throw new Error(`'${newDest}' and '${source}' are the same file`);
             }
@@ -29146,7 +29122,7 @@ function rmRF(inputPath) {
  */
 function mkdirP(fsPath) {
     return __awaiter$4(this, void 0, void 0, function* () {
-        require$$5$4.ok(fsPath, 'a path argument must be provided');
+        ok(fsPath, 'a path argument must be provided');
         yield mkdir(fsPath, { recursive: true });
     });
 }
@@ -29196,7 +29172,7 @@ function findInPath(tool) {
         // build the list of extensions to try
         const extensions = [];
         if (IS_WINDOWS$2 && process.env['PATHEXT']) {
-            for (const extension of process.env['PATHEXT'].split(path__namespace.delimiter)) {
+            for (const extension of process.env['PATHEXT'].split(path.delimiter)) {
                 if (extension) {
                     extensions.push(extension);
                 }
@@ -29211,7 +29187,7 @@ function findInPath(tool) {
             return [];
         }
         // if any path separators, return empty
-        if (tool.includes(path__namespace.sep)) {
+        if (tool.includes(path.sep)) {
             return [];
         }
         // build the list of directories
@@ -29222,7 +29198,7 @@ function findInPath(tool) {
         // across platforms.
         const directories = [];
         if (process.env.PATH) {
-            for (const p of process.env.PATH.split(path__namespace.delimiter)) {
+            for (const p of process.env.PATH.split(path.delimiter)) {
                 if (p) {
                     directories.push(p);
                 }
@@ -29231,7 +29207,7 @@ function findInPath(tool) {
         // find all matches
         const matches = [];
         for (const directory of directories) {
-            const filePath = yield tryGetExecutablePath(path__namespace.join(directory, tool), extensions);
+            const filePath = yield tryGetExecutablePath(path.join(directory, tool), extensions);
             if (filePath) {
                 matches.push(filePath);
             }
@@ -29312,7 +29288,7 @@ const IS_WINDOWS$1 = process.platform === 'win32';
 /*
  * Class for running command line tools. Handles quoting and arg parsing in a platform agnostic way.
  */
-class ToolRunner extends events__namespace.EventEmitter {
+class ToolRunner extends events$1.EventEmitter {
     constructor(toolPath, args, options) {
         super();
         if (!toolPath) {
@@ -29368,13 +29344,13 @@ class ToolRunner extends events__namespace.EventEmitter {
     _processLineBuffer(data, strBuffer, onLine) {
         try {
             let s = strBuffer + data.toString();
-            let n = s.indexOf(os__namespace.EOL);
+            let n = s.indexOf(os.EOL);
             while (n > -1) {
                 const line = s.substring(0, n);
                 onLine(line);
                 // the rest of the string ...
-                s = s.substring(n + os__namespace.EOL.length);
-                n = s.indexOf(os__namespace.EOL);
+                s = s.substring(n + os.EOL.length);
+                n = s.indexOf(os.EOL);
             }
             return s;
         }
@@ -29652,7 +29628,7 @@ class ToolRunner extends events__namespace.EventEmitter {
                 (this.toolPath.includes('/') ||
                     (IS_WINDOWS$1 && this.toolPath.includes('\\')))) {
                 // prefer options.cwd if it is specified, however options.cwd may also need to be rooted
-                this.toolPath = path__namespace.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
+                this.toolPath = path.resolve(process.cwd(), this.options.cwd || process.cwd(), this.toolPath);
             }
             // if the tool is only a file name, then resolve it from the PATH
             // otherwise verify it exists (add extension on Windows if necessary)
@@ -29665,7 +29641,7 @@ class ToolRunner extends events__namespace.EventEmitter {
                 }
                 const optionsNonNull = this._cloneExecOptions(this.options);
                 if (!optionsNonNull.silent && optionsNonNull.outStream) {
-                    optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os__namespace.EOL);
+                    optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os.EOL);
                 }
                 const state = new ExecState(optionsNonNull, this.toolPath);
                 state.on('debug', (message) => {
@@ -29675,7 +29651,7 @@ class ToolRunner extends events__namespace.EventEmitter {
                     return reject(new Error(`The cwd: ${this.options.cwd} does not exist!`));
                 }
                 const fileName = this._getSpawnFileName();
-                const cp = child__namespace.spawn(fileName, this._getSpawnArgs(optionsNonNull), this._getSpawnOptions(this.options, fileName));
+                const cp = child.spawn(fileName, this._getSpawnArgs(optionsNonNull), this._getSpawnOptions(this.options, fileName));
                 let stdbuffer = '';
                 if (cp.stdout) {
                     cp.stdout.on('data', (data) => {
@@ -29810,7 +29786,7 @@ function argStringToArray(argString) {
     }
     return args;
 }
-class ExecState extends events__namespace.EventEmitter {
+class ExecState extends events$1.EventEmitter {
     constructor(options, toolPath) {
         super();
         this.processClosed = false; // tracks whether the process has exited and stdio is closed
@@ -29838,7 +29814,7 @@ class ExecState extends events__namespace.EventEmitter {
             this._setResult();
         }
         else if (this.processExited) {
-            this.timeout = timers$1.setTimeout(ExecState.HandleTimeout, this.delay, this);
+            this.timeout = setTimeout$1(ExecState.HandleTimeout, this.delay, this);
         }
     }
     _debug(message) {
@@ -29925,8 +29901,8 @@ var execModule = /*#__PURE__*/Object.freeze({
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-os.platform();
-os.arch();
+os__default.platform();
+os__default.arch();
 
 (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -29963,7 +29939,7 @@ function addPath(inputPath) {
     else {
         issueCommand('add-path', {}, inputPath);
     }
-    process.env['PATH'] = `${inputPath}${path__namespace.delimiter}${process.env['PATH']}`;
+    process.env['PATH'] = `${inputPath}${path.delimiter}${process.env['PATH']}`;
 }
 /**
  * Gets the value of an input.
@@ -30011,7 +29987,7 @@ function setOutput(name, value) {
     if (filePath) {
         return issueFileCommand('OUTPUT', prepareKeyValueMessage(name, value));
     }
-    process.stdout.write(os__namespace.EOL);
+    process.stdout.write(os.EOL);
     issueCommand('set-output', { name }, toCommandValue(value));
 }
 //-----------------------------------------------------------------------
@@ -30063,7 +30039,7 @@ function warning(message, properties = {}) {
  * @param message info message
  */
 function info(message) {
-    process.stdout.write(message + os__namespace.EOL);
+    process.stdout.write(message + os.EOL);
 }
 
 var re = {exports: {}};
@@ -32981,8 +32957,8 @@ const userAgent = 'actions/tool-cache';
  */
 function downloadTool(url, dest, auth, headers) {
     return __awaiter(this, void 0, void 0, function* () {
-        dest = dest || path__namespace.join(_getTempDirectory(), crypto__namespace.randomUUID());
-        yield mkdirP(path__namespace.dirname(dest));
+        dest = dest || path.join(_getTempDirectory(), crypto.randomUUID());
+        yield mkdirP(path.dirname(dest));
         debug(`Downloading ${url}`);
         debug(`Destination ${dest}`);
         const maxAttempts = 3;
@@ -33007,7 +32983,7 @@ function downloadTool(url, dest, auth, headers) {
 }
 function downloadToolAttempt(url, dest, auth, headers) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (fs__namespace.existsSync(dest)) {
+        if (fs.existsSync(dest)) {
             throw new Error(`Destination file path ${dest} already exists`);
         }
         // Get the response headers
@@ -33021,12 +32997,12 @@ function downloadToolAttempt(url, dest, auth, headers) {
             throw err;
         }
         // Download the response body
-        const pipeline = require$$6__namespace.promisify(stream__namespace.pipeline);
+        const pipeline = require$$6.promisify(stream.pipeline);
         const responseMessageFactory = _getGlobal('TEST_DOWNLOAD_TOOL_RESPONSE_MESSAGE_FACTORY', () => response.message);
         const readStream = responseMessageFactory();
         let succeeded = false;
         try {
-            yield pipeline(readStream, fs__namespace.createWriteStream(dest));
+            yield pipeline(readStream, fs.createWriteStream(dest));
             debug('download complete');
             succeeded = true;
             return dest;
@@ -33140,18 +33116,18 @@ function extractZipNix(file, dest) {
 function cacheDir(sourceDir, tool, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
         version = semverExports.clean(version) || version;
-        arch = arch || os__namespace.arch();
+        arch = arch || os.arch();
         debug(`Caching tool ${tool} ${version} ${arch}`);
         debug(`source dir: ${sourceDir}`);
-        if (!fs__namespace.statSync(sourceDir).isDirectory()) {
+        if (!fs.statSync(sourceDir).isDirectory()) {
             throw new Error('sourceDir is not a directory');
         }
         // Create the tool dir
         const destPath = yield _createToolPath(tool, version, arch);
         // copy each child item. do not move. move can fail on Windows
         // due to anti-virus software having an open handle on a file.
-        for (const itemName of fs__namespace.readdirSync(sourceDir)) {
-            const s = path__namespace.join(sourceDir, itemName);
+        for (const itemName of fs.readdirSync(sourceDir)) {
+            const s = path.join(sourceDir, itemName);
             yield cp(s, destPath, { recursive: true });
         }
         // write .complete
@@ -33173,7 +33149,7 @@ function find(toolName, versionSpec, arch) {
     if (!versionSpec) {
         throw new Error('versionSpec parameter is required');
     }
-    arch = arch || os__namespace.arch();
+    arch = arch || os.arch();
     // attempt to resolve an explicit version
     if (!isExplicitVersion(versionSpec)) {
         const localVersions = findAllVersions(toolName, arch);
@@ -33184,9 +33160,9 @@ function find(toolName, versionSpec, arch) {
     let toolPath = '';
     if (versionSpec) {
         versionSpec = semverExports.clean(versionSpec) || '';
-        const cachePath = path__namespace.join(_getCacheDirectory(), toolName, versionSpec, arch);
+        const cachePath = path.join(_getCacheDirectory(), toolName, versionSpec, arch);
         debug(`checking cache: ${cachePath}`);
-        if (fs__namespace.existsSync(cachePath) && fs__namespace.existsSync(`${cachePath}.complete`)) {
+        if (fs.existsSync(cachePath) && fs.existsSync(`${cachePath}.complete`)) {
             debug(`Found tool in cache ${toolName} ${versionSpec} ${arch}`);
             toolPath = cachePath;
         }
@@ -33204,14 +33180,14 @@ function find(toolName, versionSpec, arch) {
  */
 function findAllVersions(toolName, arch) {
     const versions = [];
-    arch = arch || os__namespace.arch();
-    const toolPath = path__namespace.join(_getCacheDirectory(), toolName);
-    if (fs__namespace.existsSync(toolPath)) {
-        const children = fs__namespace.readdirSync(toolPath);
+    arch = arch || os.arch();
+    const toolPath = path.join(_getCacheDirectory(), toolName);
+    if (fs.existsSync(toolPath)) {
+        const children = fs.readdirSync(toolPath);
         for (const child of children) {
             if (isExplicitVersion(child)) {
-                const fullPath = path__namespace.join(toolPath, child, arch || '');
-                if (fs__namespace.existsSync(fullPath) && fs__namespace.existsSync(`${fullPath}.complete`)) {
+                const fullPath = path.join(toolPath, child, arch || '');
+                if (fs.existsSync(fullPath) && fs.existsSync(`${fullPath}.complete`)) {
                     versions.push(child);
                 }
             }
@@ -33223,7 +33199,7 @@ function _createExtractFolder(dest) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!dest) {
             // create a temp dir
-            dest = path__namespace.join(_getTempDirectory(), crypto__namespace.randomUUID());
+            dest = path.join(_getTempDirectory(), crypto.randomUUID());
         }
         yield mkdirP(dest);
         return dest;
@@ -33231,7 +33207,7 @@ function _createExtractFolder(dest) {
 }
 function _createToolPath(tool, version, arch) {
     return __awaiter(this, void 0, void 0, function* () {
-        const folderPath = path__namespace.join(_getCacheDirectory(), tool, semverExports.clean(version) || version, arch || '');
+        const folderPath = path.join(_getCacheDirectory(), tool, semverExports.clean(version) || version, arch || '');
         debug(`destination ${folderPath}`);
         const markerPath = `${folderPath}.complete`;
         yield rmRF(folderPath);
@@ -33241,9 +33217,9 @@ function _createToolPath(tool, version, arch) {
     });
 }
 function _completeToolPath(tool, version, arch) {
-    const folderPath = path__namespace.join(_getCacheDirectory(), tool, semverExports.clean(version) || version, arch || '');
+    const folderPath = path.join(_getCacheDirectory(), tool, semverExports.clean(version) || version, arch || '');
     const markerPath = `${folderPath}.complete`;
-    fs__namespace.writeFileSync(markerPath, '');
+    fs.writeFileSync(markerPath, '');
     debug('finished caching tool');
 }
 /**
@@ -33294,7 +33270,7 @@ function evaluateVersions(versions, versionSpec) {
  */
 function _getCacheDirectory() {
     const cacheDirectory = process.env['RUNNER_TOOL_CACHE'] || '';
-    require$$5$4.ok(cacheDirectory, 'Expected RUNNER_TOOL_CACHE to be defined');
+    ok(cacheDirectory, 'Expected RUNNER_TOOL_CACHE to be defined');
     return cacheDirectory;
 }
 /**
@@ -33302,7 +33278,7 @@ function _getCacheDirectory() {
  */
 function _getTempDirectory() {
     const tempDirectory = process.env['RUNNER_TEMP'] || '';
-    require$$5$4.ok(tempDirectory, 'Expected RUNNER_TEMP to be defined');
+    ok(tempDirectory, 'Expected RUNNER_TEMP to be defined');
     return tempDirectory;
 }
 /**
@@ -33539,8 +33515,9 @@ var MersenneTwister = /*@__PURE__*/getDefaultExportFromCjs(mersenneTwisterExport
 
 const { arch, platform: platform$1 } = process;
 
-function getMapOfArrays(name) {
-  return getInput(name)
+function getMapOfArrays(name, getInput$1) {
+  const value = getInput(name);
+  return value
     .split(/\r?\n/)
     .reduce((map, line) => {
       let [plat, aliases] = line.split(':');
@@ -33584,7 +33561,7 @@ function getRandomValues(dest) {
   return dest
 }
 
-const exists = file => promises.access(file).then(() => true, () => false);
+const exists = file => access$1(file).then(() => true, () => false);
 
 let { GITHUB_WORKSPACE: workspace, GITHUB_TOKEN: envToken } = process.env;
 
@@ -33669,10 +33646,10 @@ async function getVersion(exePath) {
 }
 
 async function install(url, name, tag, useCache)  {
-  const exeDir = node_path.join(workspace, `../${name}-${tag}`);
+  const exeDir = join(workspace, `../${name}-${tag}`);
   let exe = name;
   if (platform === 'win32') exe += '.exe';
-  const exePath = node_path.join(exeDir, exe);
+  const exePath = join(exeDir, exe);
   debug(`Executable expected at "${exePath}"`);
 
   let usedCache = true;
@@ -33715,7 +33692,7 @@ async function install(url, name, tag, useCache)  {
     if (!(await exists(exePath))) {
       info(`Link "${exeDir}"`);
       if (await exists(exeDir)) await rmRF(exeDir);
-      await promises.symlink(cacheDir$1, exeDir, 'junction');
+      await symlink$1(cacheDir$1, exeDir, 'junction');
     }
   }
 
@@ -33737,7 +33714,7 @@ async function run() {
   const token = getInput('token') || envToken;
   if (!token) throw new Error('missing token')
 
-  if (workspace) workspace = node_path.resolve(workspace);
+  if (workspace) workspace = resolve(workspace);
   else throw new Error('missing workspace')
 
   const { name: name2, tag, date, url } = await getRelease(token, name, repo, version);

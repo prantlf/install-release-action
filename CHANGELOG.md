@@ -1,5 +1,16 @@
 # Changes
 
+## [2.0.0](https://github.com/prantlf/install-release-action/compare/v1.3.0...v2.0.0) (2026-07-19)
+
+### Features
+
+* Upgrade to Node.js 24 ([81948aa](https://github.com/prantlf/install-release-action/commit/81948aa0c010b1ed63143ecb6a434a504c53a501))
+
+### BREAKING CHANGES
+
+The minimum supported version of Node.js is 24
+and the module format is ESM.
+
 ## [1.3.0](https://github.com/prantlf/install-release-action/compare/v1.2.1...v1.3.0) (2024-08-11)
 
 ### Features
