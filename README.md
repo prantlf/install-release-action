@@ -128,7 +128,7 @@ A boolean value indicating if the installation succeeded from the cache.
 
 ## License
 
-Copyright (C) 2023-2024 Ferdinand Prantl
+Copyright (C) 2023-2026 Ferdinand Prantl
 
 Licensed under the [MIT License].
 
