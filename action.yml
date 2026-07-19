@@ -57,5 +57,5 @@ outputs:
       A boolean value indicating if the installation succeeded from the cache.
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'

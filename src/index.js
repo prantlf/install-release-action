@@ -1,20 +1,23 @@
+import { access, symlink } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import * as core from '@actions/core'
+import * as execModule from '@actions/exec'
+import * as httpm from '@actions/http-client'
+import * as io from '@actions/io'
+import * as tc from '@actions/tool-cache'
+import MersenneTwister from 'mersenne-twister'
+import semver from 'semver'
+import { getArchiveSuffixes, getMapOfArrays } from './lib.js'
+
+const { exec } = execModule
+const { clean, satisfies, valid } = semver
+
 if (typeof global.crypto !== 'object') {
   global.crypto = {}
 }
 if (typeof global.crypto.getRandomValues !== 'function') {
   global.crypto.getRandomValues = getRandomValues
 }
-
-const { join, resolve } = require('node:path')
-const core = require('@actions/core')
-const { exec } = require("@actions/exec")
-const io = require('@actions/io')
-const httpm = require('@actions/http-client')
-const tc = require('@actions/tool-cache')
-const { access, symlink } = require('node:fs').promises
-const MersenneTwister = require('mersenne-twister')
-const { clean, satisfies, valid } = require('semver')
-const { getMapOfArrays, getArchiveSuffixes } = require('./lib')
 
 const { platform } = process
 let platformSuffixes

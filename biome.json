@@ -1,10 +1,12 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-  "files": {
-    "ignore": ["dist/**"]
+	"$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
+   "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
 	"linter": {
 		"enabled": true,
@@ -33,7 +35,7 @@
       "quoteProperties": "asNeeded",
 			"quoteStyle": "single",
       "semicolons": "asNeeded",
-      "trailingComma": "none"
+      "trailingCommas": "none"
     }
   },
   "json": {

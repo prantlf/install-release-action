@@ -1,6 +1,6 @@
-const { getArchiveSuffixes } = require('../src/lib')
-const test = require('node:test')
-const { deepStrictEqual } = require('node:assert')
+import { deepStrictEqual } from 'node:assert'
+import test from 'node:test'
+import { getArchiveSuffixes } from '../src/lib.js'
 
 const { arch, platform } = process
 
@@ -28,10 +28,10 @@ const expected = {
     '-darwin-x64.zip'
   ],
   'darwin-arm64': [
-    '-macos-amd64.zip',
     '-macos-aarch64.zip',
-    '-darwin-amd64.zip',
-    '-darwin-arm64.zip',
+    '-macos-arm64.zip',
+    '-darwin-aarch64.zip',
+    '-darwin-arm64.zip'
   ],
   'linux-x64': [
     '-linux-amd64.zip',

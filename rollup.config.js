@@ -1,12 +1,12 @@
-const json = require('@rollup/plugin-json')
-const commonjs = require('@rollup/plugin-commonjs')
-const { nodeResolve } = require('@rollup/plugin-node-resolve')
-const { main } = require('./package.json')
-const builtins = require('builtins')
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import builtins from 'builtins'
+import pkg from './package.json' with { type: 'json' }
 
-module.exports = {
+export default {
   input: 'src/index.js',
-  output: { file: main, format: 'cjs', sourcemap: true },
+  output: { file: pkg.main, sourcemap: true },
   plugins: [json(), commonjs(), nodeResolve({ preferBuiltins: true })],
   external: builtins()
 }

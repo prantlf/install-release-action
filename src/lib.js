@@ -1,23 +1,24 @@
-const core = require('@actions/core')
+import * as core from '@actions/core'
 
 const { arch, platform } = process
 
-exports.getMapOfArrays = function getMapOfArrays(name) {
-  return core.getInput(name)
+export function getMapOfArrays(name, getInput) {
+  const value = getInput ? getInput(name) : core.getInput(name)
+  return value
     .split(/\r?\n/)
     .reduce((map, line) => {
-      let [plat, aliases] = line.split(':');
+      let [plat, aliases] = line.split(':')
       plat = plat.trim()
       if (!plat) return map
       map[plat] = aliases
         .split(',')
         .map(arch => arch.trim())
-        .filter(arch => arch);
+        .filter(arch => arch)
       return map
     }, {})
 }
 
-exports.getArchiveSuffixes = function getArchiveSuffixes(platformSuffixes, archSuffixes) {
+export function getArchiveSuffixes(platformSuffixes, archSuffixes) {
   const plats = platformSuffixes[platform] || []
   if (!plats.includes(platform)) plats.push(platform)
   const archs = archSuffixes[arch] || []

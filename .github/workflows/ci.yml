@@ -11,21 +11,24 @@ on:
       - LICENSE
   pull_request:
 
-jobs:
+permissions:
+  id-token: write
+  contents: write
 
+jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        registry-url: 'https://registry.npmjs.org'
-    - uses: pnpm/action-setup@v2
+    - uses: actions/checkout@v7
+    - uses: pnpm/action-setup@v6
       with:
         version: latest
-        run_install: |
-          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        registry-url: 'https://registry.npmjs.org'
+    - run: pnpm ci
+    - run: npm run build
     - run: npm test
     - uses: ./
       with:
@@ -40,21 +43,19 @@ jobs:
         version: '>=0.0.1'
 
   macos:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        registry-url: 'https://registry.npmjs.org'
-    - uses: pnpm/action-setup@v2
+    - uses: actions/checkout@v7
+    - uses: pnpm/action-setup@v6
       with:
         version: latest
-        run_install: |
-          - args: [--frozen-lockfile, --no-verify-store-integrity]
-    - run: |
-        npm run build
-        npm test
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        registry-url: 'https://registry.npmjs.org'
+    - run: pnpm ci
+    - run: npm run build
+    - run: npm test
     - uses: ./
       with:
         repo: prantlf/v-jsonlint
@@ -70,16 +71,15 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        registry-url: 'https://registry.npmjs.org'
-    - uses: pnpm/action-setup@v2
+    - uses: actions/checkout@v7
+    - uses: pnpm/action-setup@v6
       with:
         version: latest
-        run_install: |
-          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        registry-url: 'https://registry.npmjs.org'
+    - run: pnpm ci
     - run: npm run build
     - uses: ./
       with:
@@ -100,18 +100,19 @@ jobs:
       - windows
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        registry-url: 'https://registry.npmjs.org'
-    - uses: pnpm/action-setup@v2
+    - uses: actions/checkout@v7
+    - uses: pnpm/action-setup@v6
       with:
         version: latest
-        run_install: |
-          - args: [--frozen-lockfile, --no-verify-store-integrity]
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+        registry-url: 'https://registry.npmjs.org'
+    - run: pnpm ci
+    - run: npm run build
     - uses: prantlf/publish-release-action@v1
       if: ${{ github.ref_name == 'master' }}
+      with:
+        no-npm-auth: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
