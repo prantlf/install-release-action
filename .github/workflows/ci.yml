@@ -110,7 +110,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: pnpm ci
     - run: npm run build
-    - uses: prantlf/publish-release-action@v1
+    - uses: prantlf/publish-release-action@v2
       if: ${{ github.ref_name == 'master' }}
       with:
         no-npm-auth: true

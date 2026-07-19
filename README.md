@@ -14,7 +14,7 @@ GitHub action for downloading, extracting, caching an executable from a GitHub r
 Install jsonlint from the most recent release:
 
 ```yml
-- uses: prantlf/install-release-action@v1
+- uses: prantlf/install-release-action@v2
   with:
     repo: prantlf/v-jsonlint
 ```
@@ -22,7 +22,7 @@ Install jsonlint from the most recent release:
 Install jsonlint from the compatible patch release recent release:
 
 ```yml
-- uses: prantlf/install-release-action@v1
+- uses: prantlf/install-release-action@v2
   with:
     repo: prantlf/v-jsonlint
     version: ~0.0.1
